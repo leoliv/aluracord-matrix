@@ -1,5 +1,5 @@
 {
-  "name": "Aluracord - Matrix (peas)",
+  "name": "Aluracord - Santoryu (hat)",
   "stickers": [
     "http://2.bp.blogspot.com/-d21tffsTIQo/U_H9QjC69gI/AAAAAAAAKqM/wnvOyUr6a_I/s1600/Pikachu%2B2.gif",
     "https://media1.giphy.com/media/BdghqxNFV4efm/200.gif",
@@ -11,16 +11,16 @@
   "theme": {
     "colors": {
       "primary": {
-        "050": "#E3F9E5",
-        "100": "#C1EAC5",
-        "200": "#A3D9A5",
-        "300": "#7BC47F",
-        "400": "#57AE5B",
-        "500": "#3F9142",
-        "600": "#2F8132",
-        "700": "#207227",
-        "800": "#0E5814",
-        "900": "#05400A"
+        "050": "#7E28E2",
+        "100": "#741DD7",
+        "200": "#6B1BC5",
+        "300": "#6118B4",
+        "400": "#5716A2",
+        "500": "#4D1490",
+        "600": "#44117E",
+        "700": "#3A0F6C",
+        "800": "#300C5A",
+        "900": "#270A48"
       },
       "neutrals": {
         "000": "#FFFFFF",
