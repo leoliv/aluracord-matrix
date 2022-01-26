@@ -36,8 +36,7 @@ export default function PaginaInicial() {
   // const username = 'omariosouto';
   const [username, setUsername] = React.useState("leoliv");
   const roteamento = useRouter();
-  const userImg =
-    username.length > 2 ? `https://github.com/${username}.png` : undefined;
+  const userImg = username.length > 2 ? `https://github.com/${username}.png` : undefined;
   const nameCheck = username.length > 2 ? username : undefined;
   // console.log(roteamento);
 
