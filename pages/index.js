@@ -1,51 +1,23 @@
-import { Box, Button, Text, TextField, Image } from '@skynexui/components'
-import appConfig from '../config.json'
-
-function GlobalStyle() {
-  return (
-    <style global jsx>{`
-      * {
-        margin: 0;
-        padding: 0;
-        box-sizing: border-box;
-        list-style: none;
-      }
-      body {
-        font-family: 'Open Sans', sans-serif;
-      }
-      /* App fit Height */ 
-      html, body, #__next {
-        min-height: 100vh;
-        display: flex;
-        flex: 1;
-      }
-      #__next {
-        flex: 1;
-      }
-      #__next > * {
-        flex: 1;
-      }
-      /* ./App fit Height */ 
-    `}</style>
-  );
-}
+import { Box, Button, Text, TextField, Image } from "@skynexui/components";
+import appConfig from "../config.json";
+import React from "react";
+import { useRouter } from "next/router";
 
 function Titulo(props) {
-  console.log(props)
-  const Tag = props.tag || 'h1'
+  // console.log(props)
+  const Tag = props.tag || "h1";
   return (
     <>
       <Tag>{props.children}</Tag>
       <style jsx>{`
-      ${Tag} {
-        color: ${appConfig.theme.colors.neutrals['000']};
-        font-size: 24px;
-        font-weight: 600;
-      }
-
+        ${Tag} {
+          color: ${appConfig.theme.colors.neutrals["000"]};
+          font-size: 24px;
+          font-weight: 600;
+        }
       `}</style>
     </>
-  )
+  );
 }
 
 // Component react
@@ -56,53 +28,104 @@ function Titulo(props) {
 // <Titulo tag="h1">Boas vindas de volta!</Titulo>
 // <h2>Discord - Alura Zoro</h2>
 // </div>
-// ) 
+// )
 // }
 // export default HomePage
 
 export default function PaginaInicial() {
-  const username = 'omariosouto';
+  // const username = 'omariosouto';
+  const [username, setUsername] = React.useState("leoliv");
+  const roteamento = useRouter();
+  const userImg =
+    username.length > 2 ? `https://github.com/${username}.png` : undefined;
+  const nameCheck = username.length > 2 ? username : undefined;
+  // console.log(roteamento);
 
   return (
     <>
-      <GlobalStyle />
       <Box
         styleSheet={{
-          display: 'flex', alignItems: 'center', justifyContent: 'center',
+          display: "flex",
+          alignItems: "center",
+          justifyContent: "center",
           backgroundColor: appConfig.theme.colors.primary[500],
-          backgroundImage: 'url(https://images4.alphacoders.com/606/thumb-1920-606667.jpg)',
-          backgroundRepeat: 'no-repeat', backgroundSize: 'cover', backgroundBlendMode: 'multiply',
+          backgroundImage:
+            "url(https://images4.alphacoders.com/606/thumb-1920-606667.jpg)",
+          backgroundRepeat: "no-repeat",
+          backgroundSize: "cover",
+          backgroundBlendMode: "multiply",
         }}
       >
         <Box
           styleSheet={{
-            display: 'flex',
-            alignItems: 'center',
-            justifyContent: 'space-between',
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "space-between",
             flexDirection: {
-              xs: 'column',
-              sm: 'row',
+              xs: "column",
+              sm: "row",
             },
-            width: '100%', maxWidth: '700px',
-            borderRadius: '5px', padding: '32px', margin: '16px',
-            boxShadow: '0 2px 10px 0 rgb(0 0 0 / 20%)',
+            width: "100%",
+            maxWidth: "700px",
+            borderRadius: "5px",
+            padding: "32px",
+            margin: "16px",
+            boxShadow: "0 2px 10px 0 rgb(0 0 0 / 20%)",
             backgroundColor: appConfig.theme.colors.neutrals[800],
           }}
         >
           {/* Formulário */}
           <Box
             as="form"
+            onSubmit={function (infoDoEvento) {
+              infoDoEvento.preventDefault();
+              console.log("Alguém submeteu o form");
+              roteamento.push("/chat");
+              // window.location.href = '/chat'
+            }}
             styleSheet={{
-              display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center',
-              width: { xs: '100%', sm: '50%' }, textAlign: 'center', marginBottom: '32px',
+              display: "flex",
+              flexDirection: "column",
+              alignItems: "center",
+              justifyContent: "center",
+              width: { xs: "100%", sm: "50%" },
+              textAlign: "center",
+              marginBottom: "32px",
             }}
           >
             <Titulo tag="h2">Bem-vindo de volta Samurai!</Titulo>
-            <Text variant="body3" styleSheet={{ marginBottom: '32px', color: appConfig.theme.colors.neutrals[300] }}>
+            <Text
+              variant="body3"
+              styleSheet={{
+                marginBottom: "32px",
+                color: appConfig.theme.colors.neutrals[300],
+              }}
+            >
               {appConfig.name}
             </Text>
 
+            {/* <input */}
+            {/*   type="text" */}
+            {/*   value={username} */}
+            {/*   onChange={function(event) { */}
+            {/*     console.log('usuário digitou', event.target.value) */}
+            {/*     // Onde ta o valor? */}
+            {/*     const valor = event.target.value */}
+            {/*     // Trocar o valor da variável */}
+            {/*     // através do React e avise quem precisa */}
+            {/*     setUsername(valor) */}
+            {/*   }} */}
+            {/* /> */}
             <TextField
+              value={username}
+              onChange={function (event) {
+                console.log("usuário digitou", event.target.value);
+                // Onde ta o valor?
+                const valor = event.target.value;
+                // Trocar o valor da variável
+                // através do React e avise quem precisa
+                setUsername(valor);
+              }}
               fullWidth
               textFieldColors={{
                 neutral: {
@@ -114,8 +137,8 @@ export default function PaginaInicial() {
               }}
             />
             <Button
-              type='submit'
-              label='Entrar'
+              type="submit"
+              label="Entrar"
               fullWidth
               buttonColors={{
                 contrastColor: appConfig.theme.colors.neutrals["000"],
@@ -127,40 +150,39 @@ export default function PaginaInicial() {
           </Box>
           {/* Formulário */}
 
-
           {/* Photo Area */}
           <Box
             styleSheet={{
-              display: 'flex',
-              flexDirection: 'column',
-              alignItems: 'center',
-              maxWidth: '200px',
-              padding: '16px',
+              display: "flex",
+              flexDirection: "column",
+              alignItems: "center",
+              maxWidth: "200px",
+              padding: "16px",
               backgroundColor: appConfig.theme.colors.neutrals[900],
-              border: '1px solid',
+              border: "1px solid",
               borderColor: appConfig.theme.colors.neutrals[999],
-              borderRadius: '10px',
+              borderRadius: "10px",
               flex: 1,
-              minHeight: '240px',
+              minHeight: "240px",
             }}
           >
             <Image
               styleSheet={{
-                borderRadius: '50%',
-                marginBottom: '16px',
+                borderRadius: "50%",
+                marginBottom: "16px",
               }}
-              src={`https://github.com/${username}.png`}
+              src={userImg}
             />
             <Text
               variant="body4"
               styleSheet={{
                 color: appConfig.theme.colors.neutrals[200],
                 backgroundColor: appConfig.theme.colors.neutrals[900],
-                padding: '3px 10px',
-                borderRadius: '1000px'
+                padding: "3px 10px",
+                borderRadius: "1000px",
               }}
             >
-              {username}
+              {nameCheck}
             </Text>
           </Box>
           {/* Photo Area */}
