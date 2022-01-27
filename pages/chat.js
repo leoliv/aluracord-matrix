@@ -1,21 +1,47 @@
 import { Box, Text, TextField, Image, Button } from "@skynexui/components";
 import React from "react";
 import appConfig from "../config.json";
+import { createClient } from '@supabase/supabase-js'
+
+const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJyb2xlIjoiYW5vbiIsImlhdCI6MTY0MzI4OTM3MCwiZXhwIjoxOTU4ODY1MzcwfQ.aSI25oy3Vid5iCjqoT6QY2IHywyBrB-aoVkte4aiXA0'
+const SUPABASE_URL = 'https://yixzahmwyapjtszefnwq.supabase.co'
+const supabaseClient = createClient(SUPABASE_URL, SUPABASE_ANON_KEY)
 
 export default function ChatPage() {
   const [mensagem, setMensagem] = React.useState('')
   const [listaDeMensagens, setListaDeMensagens] = React.useState([])
-  // Sua lógica vai aqui
+  
+  React.useEffect(() => {
+    supabaseClient
+      .from('mensagens')
+      .select('*')
+      .order('id', { ascending: false })
+      .then(({ data }) => {
+        console.log('Dados da consulta: ', data)
+        setListaDeMensagens(data)
+      })
+  }, [])
+
   function hendleNovaMensagem(novaMensagem) {
     const mensagem = {
-      id: listaDeMensagens.length + 1,
+      // id: listaDeMensagens.length + 1,
       de: 'vanessametonini',
       texto: novaMensagem
     }
-    setListaDeMensagens([
-      mensagem,
-      ...listaDeMensagens,
-    ])
+
+    supabaseClient
+      .from('mensagens')
+      .insert([
+        // Tem que ser um objeto com os MESMOS CAMPOS que você escreveu no supabase
+        mensagem
+      ])
+      .then(({ data }) => {
+        console.log('Criando mensagem: ', data)
+        setListaDeMensagens([
+          data[0],
+          ...listaDeMensagens,
+        ])
+      })
     setMensagem('')
   }
 
@@ -137,13 +163,13 @@ function Header() {
 }
 
 function MessageList(props) {
-  console.log(props.listaDeMensagens);
+  // console.log(props.listaDeMensagens);
   return (
     <Box
       tag="ul"
       styleSheet={{
-        overflow: "hidden",
         display: "flex",
+        overflow: "scroll",
         flexDirection: "column-reverse",
         flex: 1,
         color: appConfig.theme.colors.neutrals["000"],
@@ -177,7 +203,7 @@ function MessageList(props) {
                   display: "inline-block",
                   marginRight: "8px",
                 }}
-                src={`https://github.com/vanessametonini.png`}
+                src={`https://github.com/${mensagem.de}.png`}
               />
               <Text tag="strong">
                 {mensagem.de}
